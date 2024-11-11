@@ -1,0 +1,29 @@
+# Python bytecode
+core/__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment folder
+venv/
+
+# IDE or editor settings (if you use any IDEs like VSCode, PyCharm)
+.vscode/
+.idea/
+
+# Python packaging and distribution files
+*.egg-info/
+dist/
+build/
+eggs/
+*.egg
+*.tar.gz
+
+# Jupyter Notebook checkpoints (if you use Jupyter)
+.ipynb_checkpoints/
+
+# Logs and environment variables
+*.log
+.env
+
+# Exclude the public directory if you don't want to push the dataset inside it
+backend/public/MillionSongSubset/
