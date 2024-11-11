@@ -55,7 +55,7 @@ def process_in_batches(base_path, batch_size=100):
         print(f"Processed {len(batch_files)} files in this batch.")
     return features_dict
 
-def find_similar_songs(base_path, threshold=0.95, batch_size=100):
+def find_similar_songs(base_path, threshold=0.95, top_n=10, batch_size=100):
     """Find similar songs by comparing feature vectors."""
     print("Starting the process of finding similar songs...")
     
@@ -80,14 +80,16 @@ def find_similar_songs(base_path, threshold=0.95, batch_size=100):
                     if similarity >= threshold:
                         similar_songs.append((file2, similarity))
             
-            # Sort and save similar songs for the current file
+            # Sort and save only the top N most similar songs for the current file
             similar_songs.sort(key=lambda x: x[1], reverse=True)
+            top_similar_songs = similar_songs[:top_n]  # Limit to the top N similar songs
+            
             f.write(f"\nSimilar songs to {file1}:\n")
-            for song, similarity in similar_songs:
+            for song, similarity in top_similar_songs:
                 f.write(f"Song: {song}, Similarity: {similarity:.4f}\n")
 
     print("Similarity comparison process completed and results saved to similarity_results.txt.")
 
 # Run the function to find similar songs
 base_path = 'C:/Users/NEEL/Desktop/new Coding/react1/find_similar_songs/backend/public/MillionSongSubset'
-find_similar_songs(base_path)
+find_similar_songs(base_path, threshold=0.95, top_n=10)  # Adjust the threshold and top_n as needed
