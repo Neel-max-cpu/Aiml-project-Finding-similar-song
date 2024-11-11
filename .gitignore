@@ -1,1 +1,49 @@
 backend/public/MillionSongSubset/
+
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Python virtual environments
+.venv/
+env/
+venv/
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test and coverage files
+.coverage
+nosetests.xml
+coverage.xml
+*.cover
+*.hypothesis/
+
+# Temporary files
+*.bak
+*.tmp
+*.swp
