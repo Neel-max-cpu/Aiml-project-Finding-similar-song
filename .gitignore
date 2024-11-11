@@ -1,49 +1,15 @@
-backend/public/MillionSongSubset/
+# Ignore large data files and directories
+/backend/public/MillionSongSubset/
+*.h5
 
-# Byte-compiled / optimized / DLL files
-*.pyc
-*.pyo
-*.pyd
+# Ignore Python cache files
 __pycache__/
+*.pyc
 
-# Distribution / packaging
-.Python
-env/
+# Ignore virtual environment directory
 venv/
-ENV/
-*.egg-info/
-dist/
-build/
+.env
 
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# Python virtual environments
-.venv/
-env/
-venv/
-
-# IDEs and editors
+# Ignore IDE/editor files
 .idea/
 .vscode/
-*.swp
-*.swo
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-
-# Test and coverage files
-.coverage
-nosetests.xml
-coverage.xml
-*.cover
-*.hypothesis/
-
-# Temporary files
-*.bak
-*.tmp
-*.swp
