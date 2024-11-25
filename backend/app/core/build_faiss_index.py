@@ -1,18 +1,9 @@
-import faiss
-import numpy as np
-import h5py
 import os
+import numpy as np
+import faiss
+import h5py
 
-# Example: Normalize features before indexing
-def build_faiss_index(features):
-    features = np.array(features, dtype=np.float32)
-    faiss.normalize_L2(features)  # Normalize before adding to the index
-    index = faiss.IndexFlatL2(features.shape[1])  # Using L2 distance
-    index.add(features)  # Add the normalized features
-    return index
-
-
-
+# Function to load features from .h5 files
 def load_features(file):
     """Load audio features from an .h5 file."""
     try:
@@ -24,34 +15,40 @@ def load_features(file):
         print(f"Error loading {file}: {e}")
     return None
 
-def process_files_and_build_faiss_index(base_path):
-    """Process all .h5 files, load features, and build a FAISS index."""
-    features_list = []
+# Build FAISS index with normalized features
+def build_faiss_index(dataset_path):
+    """Build a FAISS index using cosine similarity (inner product)."""
     file_paths = []
-    
-    # Find all .h5 files in the base directory
-    for root, dirs, files in os.walk(base_path):
+    features = []
+
+    # Iterate through all .h5 files in the dataset path
+    for root, dirs, files in os.walk(dataset_path):
         for file in files:
             if file.endswith('.h5'):
                 file_path = os.path.join(root, file)
-                features = load_features(file_path)
-                if features is not None:
-                    features_list.append(features)
-                    file_paths.append(file_path)
+                file_paths.append(file_path)
+                
+                feature = load_features(file_path)
+                if feature is not None:
+                    features.append(feature)
+    
+    # Convert the features list to a numpy array
+    features = np.array(features, dtype=np.float32)
+    
+    # Build FAISS index using inner product for cosine similarity
+    index = faiss.IndexFlatIP(features.shape[1])  # Inner product index
+    index.add(features)  # Add normalized features to the index
+    
+    # Save the index to disk
+    faiss.write_index(index, './song_similarity.index')
 
-    # Convert features list to numpy array
-    features_matrix = np.array(features_list, dtype=np.float32)
-
-    # Build FAISS index (L2 distance)
-    index = faiss.IndexFlatL2(features_matrix.shape[1])
-    index.add(features_matrix)  # Add all features to the index
-
-    # Save the FAISS index to the root folder for future use
-    faiss.write_index(index, "./song_similarity.index")  # Save in the root folder
-    print(f"FAISS index saved. Total songs processed: {len(file_paths)}")
+    # Save the file paths to a .npy file
+    np.save('./file_paths.npy', file_paths)
 
     return index, file_paths
 
-# Process and build the index
-base_path = 'C:/Users/NEEL/Desktop/new Coding/react1/find_similar_songs/backend/public/MillionSongSubset'
-index, file_paths = process_files_and_build_faiss_index(base_path)
+# Example usage: Provide the path to the dataset
+dataset_path = 'C:/Users/NEEL/Desktop/new Coding/react1/find_similar_songs/backend/public/MillionSongSubset/'
+index, file_paths = build_faiss_index(dataset_path)
+
+print("FAISS index and file paths file saved!")
