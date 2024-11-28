@@ -34,7 +34,8 @@ def extract_metadata(file_path):
 if __name__ == "__main__":
     # Test the function on one of your .h5 files
     # test_file_path = "./public/MillionSongSubset/A/A/A/TRAAAAW128F429D538.h5"
-    test_file_path = "C:/Users/NEEL/Desktop/new Coding/react1/find_similar_songs/backend/public/MillionSongSubset/A/A/A/TRAAAAW128F429D538.h5"
+    # test_file_path = "C:/Users/NEEL/Desktop/new Coding/react1/find_similar_songs/backend/public/MillionSongSubset/A/A/A/TRAAAAW128F429D538.h5"
+    test_file_path = "C:/Users/NEEL/Desktop/new Coding/react1/find_similar_songs/backend/public/MillionSongSubset/A/F/K/TRAFKUS128F92D28DC.h5"
     metadata = extract_metadata(test_file_path)
 
     if metadata:
