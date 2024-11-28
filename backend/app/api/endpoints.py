@@ -129,8 +129,8 @@ def extract_metadata(file_path):
 
             # Musicbrainz group contains additional information
             musicbrainz_group = h5_file['/musicbrainz/songs']
-            year = musicbrainz_group['year'][0] if 'year' in musicbrainz_group.dtype.names else None
-            
+            # year = musicbrainz_group['year'][0] if 'year' in musicbrainz_group.dtype.names else None                   
+            year = musicbrainz_group['year'][0] if 'year' in musicbrainz_group.dtype.names else 0                   
             if isinstance(year, (int, np.integer)) and year > 0:
                 year = int(year)
             else:
@@ -140,65 +140,12 @@ def extract_metadata(file_path):
                 "title": title,
                 "artist_name": artist_name,
                 "album_name": album_name,
-                # "year": int(year) if isinstance(year, (int, np.integer)) else "Unknown",
-                "year": year,                
+                # "year": int(year) if isinstance(year, (int, np.integer)) else "Unknown",                                   
+                "year": year,
             }
     except Exception as e:
         print(f"Error extracting metadata from {file_path}: {e}")
         return None
-
-# @router.post("/upload-and-find")
-# async def upload_and_find(file: UploadFile):
-#     # Save the uploaded file temporarily
-#     if not file.filename.endswith(('.mp3', '.wav')):
-#         raise HTTPException(status_code=400, detail="Unsupported file format. Please upload an MP3 or WAV file.")
-    
-#     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_file:
-#         temp_file.write(await file.read())
-#         temp_path = temp_file.name
-
-#     try:
-#         # Load the audio file and extract features
-#         y, sr = librosa.load(temp_path, sr=None)
-#         mfcc_features = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=12)
-#         query_features = np.mean(mfcc_features.T, axis=0).astype(np.float32)
-
-#         # Replace NaN values with zeros
-#         query_features = np.nan_to_num(query_features, nan=0.0)
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=f"Error processing the uploaded file: {str(e)}")
-#     finally:
-#         os.remove(temp_path)  # Clean up the temporary file
-
-#     # Find similar songs using the FAISS index
-#     try:
-#         index = load_faiss_index()
-#         query_features = query_features.reshape(1, -1)
-#         distances, indices = index.search(query_features, k=5)
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=f"Error querying the FAISS index: {str(e)}")
-
-#     # Retrieve file paths from indices
-#     try:
-#         file_paths = load_file_paths()
-#         similar_songs = []
-#         for idx, dist in zip(indices[0], distances[0]):
-#             song_file_path = file_paths[idx]
-#             song_metadata = extract_metadata(song_file_path)
-#             similar_songs.append({
-#                 "song": song_file_path,
-#                 "similarity": float(dist),
-#                 "metadata": song_metadata,
-#             })
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=f"Error retrieving file paths or metadata: {str(e)}")
-
-#     # Ensure no NaN values in similarity score
-#     for song in similar_songs:
-#         song['similarity'] = np.nan_to_num(song['similarity'], nan=0.0)
-
-#     return {"similar_songs": similar_songs}
-
 
 @router.post("/upload-and-find")
 async def upload_and_find(file: UploadFile):
@@ -248,9 +195,15 @@ async def upload_and_find(file: UploadFile):
             normalized_similarity = 100 - ((dist - min_dist) / (max_dist - min_dist)) * 100
             normalized_similarity = np.nan_to_num(normalized_similarity, nan=0.0)  # Ensure no NaN values
 
+            # if normalized_similarity == 0:
+            #     normalized_similarity = "Very Small"
+            # else:
+            #     normalized_similarity = float(normalized_similarity)
+
             similar_songs.append({
                 "song": song_file_path,
                 "similarity": float(normalized_similarity),
+                # "similarity": normalized_similarity,
                 "metadata": song_metadata,
             })
     except Exception as e:
