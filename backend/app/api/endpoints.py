@@ -1,7 +1,3 @@
-from fastapi import APIRouter, File, UploadFile
-from app.core.audio_processing import find_similar_songs
-from fastapi import HTTPException, UploadFile, File
-from app.core.index_loader import load_precomputed_index_and_paths  # new import
 from fastapi import APIRouter, File, UploadFile, HTTPException
 import os
 import faiss
@@ -9,9 +5,38 @@ import tempfile
 import librosa
 import numpy as np
 
-import logging
-logging.basicConfig(level=logging.DEBUG)
 
+
+
+
+# # @router.post("/upload-and-find")
+# # async def upload_and_find(file: UploadFile = File(...)):
+  
+    
+# #     try:
+# #         logging.debug(f"Received file: {file.filename}")
+# #         # Process the file here
+# #     except Exception as e:
+# #         logging.error(f"Error occurred: {e}")
+# #         raise HTTPException(status_code=500, detail="Internal Server Error")
+
+
+
+
+
+# # covert to csv---
+
+
+# # import h5pyimport pandas as pd 
+
+# # paths = []with h5py.File('examples/test.h5','r') as hf:
+# #     hf.visit(paths.append)
+# # dt = pd.HDFStore('examples/test.h5').get(paths[1])
+# # dt.to_csv('test.csv')
+
+
+
+router = APIRouter()
 
 def load_file_paths(file_paths_file='./file_paths.npy'):
     """Load the list of file paths used for indexing."""
@@ -24,9 +49,6 @@ def load_faiss_index(index_file='./song_similarity.index'):
     if not os.path.exists(index_file):
         raise HTTPException(status_code=500, detail="FAISS index file not found.")
     return faiss.read_index(index_file)
-
-
-router = APIRouter()
 
 @router.post("/upload-and-find")
 async def upload_and_find(file: UploadFile):
@@ -67,16 +89,3 @@ async def upload_and_find(file: UploadFile):
         raise HTTPException(status_code=500, detail=f"Error retrieving file paths: {str(e)}")
 
     return {"similar_songs": similar_songs}
-
-
-
-# @router.post("/upload-and-find")
-# async def upload_and_find(file: UploadFile = File(...)):
-  
-    
-#     try:
-#         logging.debug(f"Received file: {file.filename}")
-#         # Process the file here
-#     except Exception as e:
-#         logging.error(f"Error occurred: {e}")
-#         raise HTTPException(status_code=500, detail="Internal Server Error")
