@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "./ui/select"
 import MainCard from "./MainCard";
+import Podium from "./Podium";
 
 
 const Hero = () => {
@@ -106,8 +107,6 @@ const Hero = () => {
 
   return (
     <div className='flex justify-center'>
-
-
       <div className="w-full flex flex-col justify-center items-center m-4 ">
 
         <h1 className="text-5xl font-semibold mt-12 mb-12">Copy Right Check!</h1>
@@ -121,9 +120,11 @@ const Hero = () => {
         {error && <p className="my-4 text-red-600">{error}</p>}
         {similarSongs.length > 0 && (
           <div className=" mt-10 w-full">
-            <h2 className="text-center text-3xl mb-5">Similar Songs</h2>
+            <h2 className="text-center text-3xl mb-5">Top Similar Songs</h2>
+            <Podium
+              topSongs={[...similarSongs].sort((a, b) => b.similarity - a.similarity).slice(0, 3)}
+            />
            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-6">
-
               {similarSongs.map((song, index) => (
                 <MainCard song={song} index={index}/>
 

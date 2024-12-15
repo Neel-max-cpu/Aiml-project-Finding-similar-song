@@ -135,7 +135,7 @@ def extract_metadata(file_path):
             if isinstance(year, (int, np.integer)) and year > 0:
                 year = int(year)
             else:
-                year = "Unknown Year"
+                year = "Unknown"
 
             return {
                 "title": title,

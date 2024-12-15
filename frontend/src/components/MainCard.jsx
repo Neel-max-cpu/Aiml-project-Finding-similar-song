@@ -14,7 +14,7 @@ const MainCard = ({song, index}) => {
             <Card key={index} className=''>
                 <CardHeader>
                     <CardTitle>
-                        Title: {song.metadata.title}
+                        Song: {song.metadata.title}
                     </CardTitle>
                     <CardDescription>
                         Artist: {song.metadata.artist_name}
@@ -22,7 +22,7 @@ const MainCard = ({song, index}) => {
                 </CardHeader>
                 <CardContent>
                     <p>Album: {song.metadata.album_name}</p>
-                    <p>{song.metadata.year}</p>
+                    <p>Year: {song.metadata.year}</p>
                     <p>Similarity: {song.similarity === 0 ? "Very Low" : song.similarity.toFixed(2) + "%"}</p>
                 </CardContent>
             </Card>
