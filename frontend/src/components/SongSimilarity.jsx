@@ -55,7 +55,7 @@ const SongSimilarity = () => {
                 <strong>Artist:</strong> {song.metadata.artist_name} <br />
                 <strong>Album:</strong> {song.metadata.album_name} <br />
                 <strong>Year:</strong> {song.metadata.year} <br />
-                <strong>Similarity:</strong> {song.similarity.toFixed(2)}% <br />
+                <strong>Similarity:</strong> {song.similarity === 0 ? "Very Low" : song.similarity.toFixed(2) + "%"} <br />
                 <em>File Path:</em> {song.song}
               </li>
             ))}

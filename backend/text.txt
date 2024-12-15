@@ -1,0 +1,6 @@
+uvicorn app.main:app --reload
+
+for running 
+
+.\venv\Scripts\activate
+for virtural environment
