@@ -110,71 +110,13 @@ const Hero = () => {
            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-6">
               {/* Map the sorted songs to MainCard */}
               {sortedSongs.map((song, index) => (
-                <MainCard song={song} index={index}/>
-
-                // <Card key={index} className=''>
-                //   <CardHeader>
-                //     <CardTitle>
-                //       Title: {song.metadata.title}
-                //     </CardTitle>
-                //     <CardDescription>
-                //       Artist: {song.metadata.artist_name}
-                //     </CardDescription>
-                //   </CardHeader>
-                //   <CardContent>
-                //     <p>{song.metadata.album_name}</p>
-                //     <p>{song.metadata.year}</p>
-                //   </CardContent>
-                // </Card>
-
-                // <li key={index}>
-                //   <strong>Title:</strong> {song.metadata.title} <br />
-                //   <strong>Artist:</strong> {song.metadata.artist_name} <br />
-                //   <strong>Album:</strong> {song.metadata.album_name} <br />
-                //   <strong>Year:</strong> {song.metadata.year} <br />
-                //   <strong>Similarity:</strong> {song.similarity === 0 ? "Very Low" : song.similarity.toFixed(2) + "%"} <br />
-                //   <em>File Path:</em> {song.song}
-                // </li>
+                <MainCard song={song} index={index}/>              
               ))}
            </div>
             
           </div>
         )}
       </div>
-      {/* <Card className="w-[350px]">
-        <CardHeader>
-          <CardTitle>Create project</CardTitle>
-          <CardDescription>Deploy your new project in one-click.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form>
-            <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" placeholder="Name of your project" />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="framework">Framework</Label>
-                <Select>
-                  <SelectTrigger id="framework">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <SelectItem value="next">Next.js</SelectItem>
-                    <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                    <SelectItem value="astro">Astro</SelectItem>
-                    <SelectItem value="nuxt">Nuxt.js</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </form>
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button variant="outline">Cancel</Button>
-          <Button>Deploy</Button>
-        </CardFooter>
-      </Card> */}
     </div>
   )
 }
