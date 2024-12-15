@@ -111,9 +111,9 @@ function App() {
 
 
   return (   
-    <div className="h-screen w-screen bg-white flex justify-center items-center">
-        <SongSimilarity/>
-        {/* <Hero/>     */}
+    <div >
+        {/* <SongSimilarity/> */}
+        <Hero/>    
         {/* {tree(jsonStructure)} */}
     </div>       
   );
