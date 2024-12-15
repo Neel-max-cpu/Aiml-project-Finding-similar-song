@@ -1,23 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card"
-import { Button } from './ui/button'
-import { Input } from "./ui/input"
-import { Label } from "./ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select"
 import MainCard from "./MainCard";
 import Podium from "./Podium";
 
@@ -105,6 +87,9 @@ const Hero = () => {
     }
   };
 
+  // sort the songs based on similarity
+  const sortedSongs = [...similarSongs].sort((a, b) => b.similarity - a.similarity);
+
   return (
     <div className='flex justify-center'>
       <div className="w-full flex flex-col justify-center items-center m-4 ">
@@ -121,11 +106,10 @@ const Hero = () => {
         {similarSongs.length > 0 && (
           <div className=" mt-10 w-full">
             <h2 className="text-center text-3xl mb-5">Top Similar Songs</h2>
-            <Podium
-              topSongs={[...similarSongs].sort((a, b) => b.similarity - a.similarity).slice(0, 3)}
-            />
+            <Podium topSongs={sortedSongs.slice(0, 3)} />
            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-6">
-              {similarSongs.map((song, index) => (
+              {/* Map the sorted songs to MainCard */}
+              {sortedSongs.map((song, index) => (
                 <MainCard song={song} index={index}/>
 
                 // <Card key={index} className=''>

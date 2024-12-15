@@ -28,6 +28,9 @@ const MainCard = ({ song, index }) => {
             <Card key={index} className=''>
                 <CardHeader>
                     <CardTitle>
+                        #{index+1}
+                    </CardTitle>
+                    <CardTitle>
                         Song: {song.metadata.title}
                     </CardTitle>
                     <CardDescription>

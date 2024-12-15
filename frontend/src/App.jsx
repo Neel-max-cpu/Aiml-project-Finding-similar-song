@@ -5,6 +5,8 @@ import Hero from "./components/Hero";
 function App() {
 
 
+  // test --
+  /*
   const jsonStructure = {
     value: 1,
     left: {
@@ -66,6 +68,7 @@ function App() {
       },
     },
   };
+  
 
   // function tree(node) {
   //   if (node == null) {
@@ -108,7 +111,7 @@ function App() {
 
   //   )
   // }
-
+  */
 
   return (   
     <div >
