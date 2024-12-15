@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select"
+import MainCard from "./MainCard";
 
 
 const Hero = () => {
@@ -117,27 +118,30 @@ const Hero = () => {
             {loading ? "Uploading..." : "Find Similar Songs"}
           </button>
         </div>
-        {error && <p className="text-red-600">{error}</p>}
+        {error && <p className="my-4 text-red-600">{error}</p>}
         {similarSongs.length > 0 && (
           <div className=" mt-10 w-full">
             <h2 className="text-center text-3xl mb-5">Similar Songs</h2>
            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mx-6">
 
               {similarSongs.map((song, index) => (
-                <Card key={index} className=''>
-                  <CardHeader>
-                    <CardTitle>
-                      Title: {song.metadata.title}
-                    </CardTitle>
-                    <CardDescription>
-                      Artist: {song.metadata.artist_name}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p>{song.metadata.album_name}</p>
-                    <p>{song.metadata.year}</p>
-                  </CardContent>
-                </Card>
+                <MainCard song={song} index={index}/>
+
+                // <Card key={index} className=''>
+                //   <CardHeader>
+                //     <CardTitle>
+                //       Title: {song.metadata.title}
+                //     </CardTitle>
+                //     <CardDescription>
+                //       Artist: {song.metadata.artist_name}
+                //     </CardDescription>
+                //   </CardHeader>
+                //   <CardContent>
+                //     <p>{song.metadata.album_name}</p>
+                //     <p>{song.metadata.year}</p>
+                //   </CardContent>
+                // </Card>
+
                 // <li key={index}>
                 //   <strong>Title:</strong> {song.metadata.title} <br />
                 //   <strong>Artist:</strong> {song.metadata.artist_name} <br />

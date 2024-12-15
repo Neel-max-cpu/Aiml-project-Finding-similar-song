@@ -94,6 +94,7 @@
 
 
 from fastapi import APIRouter, File, UploadFile, HTTPException
+from sklearn.preprocessing import normalize
 import os
 import faiss
 import tempfile
@@ -147,65 +148,126 @@ def extract_metadata(file_path):
         print(f"Error extracting metadata from {file_path}: {e}")
         return None
 
+# @router.post("/upload-and-find")
+# async def upload_and_find(file: UploadFile):
+#     # Save the uploaded file temporarily
+#     if not file.filename.endswith(('.mp3', '.wav')):
+#         raise HTTPException(status_code=400, detail="Unsupported file format. Please upload an MP3 or WAV file.")
+    
+#     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_file:
+#         temp_file.write(await file.read())
+#         temp_path = temp_file.name
+
+#     try:
+#         # Load the audio file and extract features
+#         y, sr = librosa.load(temp_path, sr=None)
+#         mfcc_features = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=12)
+#         query_features = np.mean(mfcc_features.T, axis=0).astype(np.float32)
+
+#         # Replace NaN values with zeros
+#         # query_features = np.nan_to_num(query_features, nan=0.0)
+
+#         # Normalize the query features
+#         # query_features = normalize(query_features.reshape(1, -1), norm='l2')
+        
+#         # Normalize query features
+#         query_features = query_features / np.linalg.norm(query_features)
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=f"Error processing the uploaded file: {str(e)}")
+#     finally:
+#         os.remove(temp_path)  # Clean up the temporary file
+
+#     # Find similar songs using the FAISS index
+#     try:
+#         index = load_faiss_index()
+#         # query_features = query_features.reshape(1, -1)
+#         distances, indices = index.search(query_features, k=5)
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=f"Error querying the FAISS index: {str(e)}")
+
+#     # Retrieve file paths from indices
+#     try:
+#         file_paths = load_file_paths()
+#         similar_songs = []
+
+#         # Find min and max distances for normalization
+#         # min_dist = np.min(distances)
+#         # max_dist = np.max(distances)
+
+#         for idx, dist in zip(indices[0], distances[0]):
+#             song_file_path = file_paths[idx]
+#             song_metadata = extract_metadata(song_file_path)
+
+#             # Normalize the similarity score to be between 0 and 100
+#             # normalized_similarity = 100 - ((dist - min_dist) / (max_dist - min_dist)) * 100
+#             # normalized_similarity = np.nan_to_num(normalized_similarity, nan=0.0)  # Ensure no NaN values
+
+#             # if normalized_similarity == 0:
+#             #     normalized_similarity = "Very Small"
+#             # else:
+#             #     normalized_similarity = float(normalized_similarity)
+
+#             similar_songs.append({
+#                 "song": song_file_path,
+#                 # "similarity": float(normalized_similarity),
+#                 "similarity": float(dist),
+#                 # "similarity": normalized_similarity,
+#                 "metadata": song_metadata,
+#             })
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=f"Error retrieving file paths or metadata: {str(e)}")
+    
+#     return {"similar_songs": similar_songs}
+
+def normalize_similarity(distances, min_dist=0, max_dist=300):  # Assume 300 as a reasonable max distance
+    similarities = 100 - ((distances - min_dist) / (max_dist - min_dist)) * 100
+    similarities = np.clip(similarities, 0, 99)  # Cap at 99% to avoid misleading results
+    return similarities
+
+
 @router.post("/upload-and-find")
 async def upload_and_find(file: UploadFile):
-    # Save the uploaded file temporarily
     if not file.filename.endswith(('.mp3', '.wav')):
         raise HTTPException(status_code=400, detail="Unsupported file format. Please upload an MP3 or WAV file.")
-    
+
     with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_file:
         temp_file.write(await file.read())
         temp_path = temp_file.name
 
     try:
-        # Load the audio file and extract features
+        # Load and normalize the audio file
         y, sr = librosa.load(temp_path, sr=None)
         mfcc_features = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=12)
         query_features = np.mean(mfcc_features.T, axis=0).astype(np.float32)
-
-        # Replace NaN values with zeros
-        query_features = np.nan_to_num(query_features, nan=0.0)
+        query_features /= np.linalg.norm(query_features)  # L2 normalize the query
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing the uploaded file: {str(e)}")
     finally:
-        os.remove(temp_path)  # Clean up the temporary file
+        os.remove(temp_path)
 
-    # Find similar songs using the FAISS index
     try:
+        # Load FAISS index and search
         index = load_faiss_index()
         query_features = query_features.reshape(1, -1)
         distances, indices = index.search(query_features, k=5)
+
+        # Normalize distances into similarity scores
+        similarities = normalize_similarity(distances[0])
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error querying the FAISS index: {str(e)}")
 
-    # Retrieve file paths from indices
     try:
+        # Map results to file paths and metadata
         file_paths = load_file_paths()
-        similar_songs = []
-
-        # Find min and max distances for normalization
-        min_dist = np.min(distances)
-        max_dist = np.max(distances)
-
-        for idx, dist in zip(indices[0], distances[0]):
-            song_file_path = file_paths[idx]
-            song_metadata = extract_metadata(song_file_path)
-
-            # Normalize the similarity score to be between 0 and 100
-            normalized_similarity = 100 - ((dist - min_dist) / (max_dist - min_dist)) * 100
-            normalized_similarity = np.nan_to_num(normalized_similarity, nan=0.0)  # Ensure no NaN values
-
-            # if normalized_similarity == 0:
-            #     normalized_similarity = "Very Small"
-            # else:
-            #     normalized_similarity = float(normalized_similarity)
-
-            similar_songs.append({
-                "song": song_file_path,
-                "similarity": float(normalized_similarity),
-                # "similarity": normalized_similarity,
-                "metadata": song_metadata,
-            })
+        similar_songs = [
+            {
+                "song": file_paths[idx],
+                "similarity": float(sim),
+                "metadata": extract_metadata(file_paths[idx])
+            }
+            for idx, sim in zip(indices[0], similarities)
+            if file_paths[idx] != temp_path  # Exclude self-match
+        ]
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving file paths or metadata: {str(e)}")
 

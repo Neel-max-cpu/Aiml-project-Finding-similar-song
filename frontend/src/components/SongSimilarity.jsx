@@ -29,7 +29,8 @@ const SongSimilarity = () => {
         },
       });
 
-      setSimilarSongs(response.data.similar_songs);
+      console.log("API Response Data:", response.data);
+      setSimilarSongs(response.data.similar_songs);      
     } catch (err) {
       setError(err.response?.data?.detail || "An error occurred.");
     } finally {
