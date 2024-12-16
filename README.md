@@ -16,10 +16,7 @@
 - **Google Developer Console**
 
 ## Overview
-This project is an Admin Dashboard that enables efficient user management with role-based access control (RBAC). The dashboard allows administrators to manage user accounts, view statistics, and access data visualizations. It includes two roles: Admin and User, each with specific permissions. The interface is fully responsive, ensuring usability across desktop and mobile devices.
-Admin is automatically created with admin as username and password (using a create admin function - can change accordingly)
-
-This project is an Ai/Ml based project where one can find similar songs based on the track/song they uploaded. File can be of the
+This project is an Ai/Ml - web based project where one can find similar songs based on the track/song they uploaded. File can be of the
 format of .mp3/.wav.
 Based on that top 5 results will be shown, along with their youtube link if available(api taken from YouTube Data API v3).
 
