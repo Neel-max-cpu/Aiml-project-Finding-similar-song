@@ -31,7 +31,7 @@ Based on that top 5 results will be shown, along with their youtube link if avai
 
 ## Features
 - **Upload**:  Users can uplod their track(.mp3/.wav) format.
--**View**: Users can see the top 5 similar track along with the youtube link(if available).
+- **View**: Users can see the top 5 similar track along with the youtube link(if available).
 - **Responsive Design**: Optimized for various screen sizes, providing a seamless experience on both mobile and desktop devices.
 
 ## Technologies Used
