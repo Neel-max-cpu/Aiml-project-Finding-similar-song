@@ -69,8 +69,15 @@ Run the following command to install the necessary dependencies for the frontend
 ```
 npm install
 ```
+create an .env file and write your api key
+```
+VITE_API_KEY="your api key"
+```
 
-For the backend you need to check and install the dependencies directly
+For the backend you need to check and install the dependencies directly or can do it from requirements.txt
+```
+pip install -r requirements.txt
+```
 
 Important to, download the dataset you can go to MillionSongData's website [Link](http://millionsongdataset.com/) here.
 I have used the million song subset(1.8gb) the full data set if of 280gb. Download it and keep the file in the public folder of the backend.
