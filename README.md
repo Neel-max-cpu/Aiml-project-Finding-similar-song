@@ -55,7 +55,7 @@ Ensure you have the following installed on your machine:
 
 ### Step 1: Clone the Repository
 ```bash
-git clone [https://github.com/Neel-max-cpu/Aiml-project-Finding-similar-song.git](https://github.com/Neel-max-cpu/AdminDashboard.git)
+git clone https://github.com/Neel-max-cpu/Aiml-project-Finding-similar-song.git
 ```
 
 ### Step 2: Navigate to the Project Directory
@@ -73,7 +73,7 @@ Run the following command to install the necessary dependencies for the frontend
 ```
 npm install
 ```
-create an .env file and write your api key
+create an .env file and write your youtube api key
 ```
 VITE_API_KEY="your api key"
 ```
