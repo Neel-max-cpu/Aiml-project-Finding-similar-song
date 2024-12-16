@@ -12,8 +12,8 @@
 - **YouTube**
 - **Shadcn documentation**
 - **GeekForGeeks**
--**MillionSongDataset**
--**Google Developer Console**
+- **MillionSongDataset**
+- **Google Developer Console**
 
 ## Overview
 This project is an Admin Dashboard that enables efficient user management with role-based access control (RBAC). The dashboard allows administrators to manage user accounts, view statistics, and access data visualizations. It includes two roles: Admin and User, each with specific permissions. The interface is fully responsive, ensuring usability across desktop and mobile devices.
@@ -79,7 +79,7 @@ Important to, download the dataset you can go to MillionSongData's website [Link
 I have used the million song subset(1.8gb) the full data set if of 280gb. Download it and keep the file in the public folder of the backend.
 
 ### Step 4: Set Up the Environment Variables
-Create the .env file, just paste your api(can be fetched from here [Link](https://console.cloud.google.com/apis/dashboard)link).
+Create the .env file, just paste your api(can be fetched from here [Link](https://console.cloud.google.com/apis/dashboard)).
 Create an account and enable YouTube Data API v3 and create an api key.
 
 
@@ -90,7 +90,7 @@ After setting up the environment variables, you can start the application.
 ### How to Run
 ### Step 1: Start the Backend Server
 Before running the backend build/precompute your faiss index.
-Nvaigate to the corefolder then build_faiss_index.py run that command or directly run the command, wait for it as it can take sometime!
+Navigate to the corefolder then build_faiss_index.py run that command or directly run the command from the backend folder, wait for it as it can take sometime!
 ```
 cd backend\app\core
 python build_faiss_index.py
