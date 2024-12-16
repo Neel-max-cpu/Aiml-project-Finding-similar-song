@@ -43,9 +43,6 @@ Based on that top 5 results will be shown, along with their youtube link if avai
 
 ## Installation
 
-### Links to the gpt prompt if you would like to read
-- Here [Link1](https://chatgpt.com/share/675fae47-b860-8008-b477-3984cab59079)
-- Here [Link2](https://chatgpt.com/share/675fae93-71c0-8008-9361-cc5d572e1692)
 
 ### Prerequisites
 Ensure you have the following installed on your machine:
@@ -73,29 +70,36 @@ Run the following command to install the necessary dependencies for the frontend
 ```
 npm install
 ```
-create an .env file and write your youtube api key
-```
-VITE_API_KEY="your api key"
-```
 
 For the backend you need to check and install the dependencies directly or can do it from requirements.txt
 ```
 pip install -r requirements.txt
 ```
 
+### Step 4. Download Dataset
 Important to, download the dataset you can go to MillionSongData's website [Link](http://millionsongdataset.com/) here.
 I have used the million song subset(1.8gb) the full data set if of 280gb. Download it and keep the file in the public folder of the backend.
 
-### Step 4: Set Up the Environment Variables
+### Step 5: Set Up the Environment Variables
 Create the .env file, just paste your api(can be fetched from here [Link](https://console.cloud.google.com/apis/dashboard)).
 Create an account and enable YouTube Data API v3 and create an api key.
+create an .env file and write your youtube api key
+```
+VITE_API_KEY="your api key"
+```
+
+
+### Links to the gpt prompt if you would like to read
+- Here [Link1](https://chatgpt.com/share/675fae47-b860-8008-b477-3984cab59079)
+- Here [Link2](https://chatgpt.com/share/675fae93-71c0-8008-9361-cc5d572e1692)
+
 
 
 ### Usage
 After setting up the environment variables, you can start the application.
 
 
-### How to Run
+## How to Run
 ### Step 1: Start the Backend Server
 Before running the backend build/precompute your faiss index.
 Navigate to the corefolder then build_faiss_index.py run that command or directly run the command from the backend folder, wait for it as it can take sometime!
