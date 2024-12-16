@@ -20,7 +20,7 @@ This project is an Ai/Ml - web based project where one can find similar songs ba
 format of .mp3/.wav.
 Based on that top 5 results will be shown, along with their youtube link if available(api taken from YouTube Data API v3).
 
-## Check the video for the brief of the project without running here  -> [Link]() ⭐
+## Check the video for the brief of the project without running here  -> [Link](https://youtu.be/rz-K81TZzMQ) ⭐
 
 ## Table of Contents
 - [Features](#features)
