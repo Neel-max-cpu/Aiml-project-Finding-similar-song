@@ -43,6 +43,10 @@ Based on that top 5 results will be shown, along with their youtube link if avai
 
 ## Installation
 
+### Links to the gpt prompt if you would like to read
+- Here [Link1](https://chatgpt.com/share/675fae47-b860-8008-b477-3984cab59079)
+- Here [Link2](https://chatgpt.com/share/675fae93-71c0-8008-9361-cc5d572e1692)
+
 ### Prerequisites
 Ensure you have the following installed on your machine:
 - Node.js (v14 or later)
