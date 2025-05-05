@@ -1,0 +1,13 @@
+# Ignore datasets, models, generated files
+*.ipynb linguist-vendored
+data/* linguist-vendored
+models/* linguist-vendored
+checkpoints/* linguist-vendored
+*.h5 linguist-vendored
+*.pkl linguist-vendored
+*.pt linguist-vendored
+*.csv linguist-vendored
+
+# If you have docs or notebooks
+docs/* linguist-vendored
+notebooks/* linguist-vendored
